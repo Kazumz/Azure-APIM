@@ -21,7 +21,9 @@ resource "azurerm_api_management" "global-apim" {
     xml_content = <<XML
     <policies>
       <inbound />
-      <backend />
+	  <backend>
+		<forward-request timeout="60"/>
+	  </backend>
       <outbound />
       <on-error />
     </policies>
