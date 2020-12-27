@@ -20,7 +20,12 @@ resource "azurerm_api_management" "global-apim" {
   policy {
     xml_content = <<XML
     <policies>
-      <inbound />
+      <inbound>
+        <rate-limit-by-key  calls="5"
+              renewal-period="60"
+              increment-condition="@(context.Response.StatusCode == 200)"
+              counter-key="@(context.Request.IpAddress)"/>
+      </inbound>
 	  <backend>
 		<forward-request timeout="60"/>
 	  </backend>
